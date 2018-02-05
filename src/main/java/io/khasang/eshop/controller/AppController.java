@@ -19,9 +19,9 @@ public class AppController {
 
     //http://localhost:8080/
     @RequestMapping("/")
-    public String helloPage(Model model) {
-        model.addAttribute("name", "World");
-        return "hello";
+    @ResponseBody
+    public String helloPage() {
+        return "OK";
     }
 
     @RequestMapping("/create")
@@ -41,9 +41,11 @@ public class AppController {
     }
 
     @ResponseBody
-    @RequestMapping(value = {"/password/{password}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/password/{password}"})
     public String getEncryptedPassword(@PathVariable("password") String password) {
         return new BCryptPasswordEncoder().encode(password);
     }
+
+
 
 }

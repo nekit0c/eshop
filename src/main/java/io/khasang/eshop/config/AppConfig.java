@@ -1,5 +1,11 @@
 package io.khasang.eshop.config;
 
+import io.khasang.eshop.dao.CatDao;
+import io.khasang.eshop.dao.EmployeeDao;
+import io.khasang.eshop.dao.impl.CatDaoImpl;
+import io.khasang.eshop.dao.impl.EmployeeDaoImpl;
+import io.khasang.eshop.entity.Cat;
+import io.khasang.eshop.entity.Employee;
 import io.khasang.eshop.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +20,7 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 @Configuration
 @PropertySource(value = "classpath:util.properties")
 @PropertySource(value = "classpath:auth.properties")
+@PropertySource(value = "classpath:hibernate.properties")
 public class AppConfig {
     @Autowired
     private Environment environment;
@@ -43,6 +50,16 @@ public class AppConfig {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(dataSource());
         return jdbcTemplate;
+    }
+
+    @Bean
+    public CatDao catDao() {
+        return new CatDaoImpl(Cat.class);
+    }
+
+    @Bean
+    public EmployeeDao employeeDao() {
+        return new EmployeeDaoImpl(Employee.class);
     }
 
     @Bean
